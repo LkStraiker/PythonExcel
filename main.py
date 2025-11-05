@@ -70,15 +70,20 @@ df_canal = pd.read_excel(xls, "Dim_Canal")
 df_regiao = pd.read_excel(xls, "Dim_Regiao")
 df_data = pd.read_excel(xls, "Dim_Data")
 
-#
+#Limpeza dos dados
+
+for df in [df_vendas, df_produto, df_cliente, df_canal, df_regiao, df_data]:
+    strip_strings(df)
 
 
+df_vendas["DataPedido"] = pd.to_datatime(df_vendas["DataPedido"], errors="coerce")
+df_vendas["DataEnvio"] = pd.to_datetime(df_vendas["DataEnvio"], errors="coerce")
 
+num_cols = [
+    "Quantidade","PreçoUnitario", "taxaDesconto", "Valordesconto", "ValorBruto",
+    "Receita"," CustoTotal", "DespesasVariaveis", "LucroBruto", "Lucro"
+]
 
-
-
-
-
-
-
+for c in num_cols:
+    df_vendas[c] = pd.to_numeric(df_vendas[c], errors="coerce")
 
