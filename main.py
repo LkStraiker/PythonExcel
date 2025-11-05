@@ -103,6 +103,23 @@ mask_canal = df_vendas["ID_Canal"].isin(df_canal["ID_Canal"])
 df_vendas = df_vendas[mask_prod & mask_cli & mask_canal]
 
 
+#3 KPIs e Ànalises
+
+
+df_vendas["AnoMes"] = df_vendas["DataPedido"].dt.to.period("M").astype(str)
+
+kpi = {
+    "Receita Total": df_vendas["Receita"].sum(),
+    "Lucro Total": df_vendas["Lucro"].sum(),
+    "Margem(%)": df_vendas["LucroBruto"].sum() / df_vendas["Receita"].sum() * 100,
+    "Ticket Médio (R$)": df_vendas["Receita"].mean(),
+    "Quantidade": df_vendas["Quantidade"].sum(),
+    "Linhas de Venda": len(df_vendas)
+}
+
+
+
+
 
 
 
