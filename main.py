@@ -87,3 +87,16 @@ num_cols = [
 for c in num_cols:
     df_vendas[c] = pd.to_numeric(df_vendas[c], errors="coerce")
 
+#Remover duplicados
+
+before = len(df_vendas)
+df_vendas.drop_duplicates(subset= ["ID_Pedido", "ID_Produto"], inplace=True)
+dup_removed = before - len(df_vendas)
+
+
+
+
+
+
+
+
