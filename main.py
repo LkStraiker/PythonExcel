@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 from pathlib import Path
 
+from sqlalchemy.testing.plugin.plugin_base import engines
+
 # Caminhos dos arquivos
 SRC_PATH = Path("Fabrica_Roupas_PT.xlsx")
 CLEAN_XLSX_PATH = Path("Fabrica_Roupas_PT_CLEAN.xlsx")
@@ -130,6 +132,22 @@ vendas_regiao = df_vendas.groupby("Região", as_index=False)[["Receita","Lucro"]
 top_produtos = df_vendas.merge(df_produto[["ID_Produto","NomeProduto","Categoria"]], on="ID_Produto") \
     .groupby(["NomeProduto","Categoria"], as_index=False)[["Receita","Lucro","Quantidade"]].sum() \
     .sort_values("Receita", ascending=False).head(20)
+
+
+#Exportar planilha limpa
+
+
+with pd.ExcelWriter(CLEAN_XLSX_PATH, engine="xlsxwriter", datetime_format="dd/mm/yyyy") as writer:
+    for sheet, df in {
+        "Fato_Vendas": df_vendas,
+        "Dim_Produto": df_produto,
+        "Dim_Cliente": df_cliente,
+        "Dim_Canal": df_canal,
+        "Dim_Região": df_regiao,
+        "Dim_Data": df_data
+    }.items():
+        df.to_excel(writer, index=False, sheet_name=sheet)
+        auto_widths(writer, df, sheet)
 
 
 
