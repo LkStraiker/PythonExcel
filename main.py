@@ -22,3 +22,12 @@ def strip_strings(df: pd.DataFrame) -> pd.DataFrame:
 def auto_widths(writer, df: pd.DataFrame, sheet_name: str, minw=10, maxw=35):
     """Ajusta largura das colunas no Excel"""
     ws = writer.sheets[sheet_name]
+    for i, col in enumerate(df.columns):
+        try:
+            series = df[col].astype(str)
+            width = len(series.map(len).max(), len(str(col))) + 2
+            width = max(minw, min(maxw, width))
+            ws.set_column(i, i, width)
+
+
+
