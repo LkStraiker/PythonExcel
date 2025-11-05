@@ -117,6 +117,22 @@ kpi = {
     "Linhas de Venda": len(df_vendas)
 }
 
+#Agrupamento
+
+
+receita_mes = df_vendas.groupby("AnoMes", as_index=False)["Receita"].sum().sort_values("AnoMes")
+vendas_cat = df_vendas.merge(df_produto[["ID_Produto","Categoria"]], on="ID_Produto") \
+    .groupby("Categoria", as_index=False)[["Receita","Lucro"]].sum().sort_values("Receita", ascending=False)
+vendas_canal = df_vendas.merge(df_canal, on="ID_Canal") \
+    .groupby("Canal", as_index=False)[["Receita","Lucro"]].sum().sort_values("Receita", ascending=False)
+vendas_regiao = df_vendas.groupby("Região", as_index=False)[["Receita","Lucro"]].sum().sort_values("Receita", ascending=False)
+
+top_produtos = df_vendas.merge(df_produto[["ID_Produto","NomeProduto","Categoria"]], on="ID_Produto") \
+    .groupby(["NomeProduto","Categoria"], as_index=False)[["Receita","Lucro","Quantidade"]].sum() \
+    .sort_values("Receita", ascending=False).head(20)
+
+
+
 
 
 
