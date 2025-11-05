@@ -60,6 +60,18 @@ def add_chart(pdf, df, xcol, ycol, title, kind="line", xlabel=None, ylabel=None)
             pdf.savefig(fig, bbox_inches='tight')
             plt.close(fig)
 
+#Leitura da planilha
+
+xls = pd.ExcelFile(SRC_PATH)
+df_vendas = pd.read_excel(xls, "Fato_vendas")
+df_produto = pd.read_excel(xls, "Dim_Produto")
+df_cliente = pd.read_excel(xls, "Dim_Cliente")
+df_canal = pd.read_excel(xls, "Dim_Canal")
+df_regiao = pd.read_excel(xls, "Dim_Regiao")
+df_data = pd.read_excel(xls, "Dim_Data")
+
+#
+
 
 
 
