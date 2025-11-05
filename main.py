@@ -44,6 +44,24 @@ def add_table(pdf,df, title):
     pdf.savefig(bbox_inches='tight')
     plt.close(fig)
 
+def add_chart(pdf, df, xcol, ycol, title, kind="line", xlabel=None, ylabel=None):
+    "Criar grafico no Pdf"
+    fig, ax = plt.subplots(figsize=(11.69,8.27))
+    if kind == "bar":
+        ax.bar(df[xcol], df[ycol], align='center')
+    else:
+        ax.plot(df[xcol], df[ycol])
+        ax.set_title(title, fontsize=14, fontweight='bold',)
+        if xlabel:
+            ax.set_xlabel(xlabel)
+            if ylabel:
+                ax.set_ylabel(ylabel)
+            fig.autofmt_xdate(rotation=45)
+            pdf.savefig(fig, bbox_inches='tight')
+            plt.close(fig)
+
+
+
 
 
 
