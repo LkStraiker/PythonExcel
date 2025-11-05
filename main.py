@@ -94,6 +94,19 @@ df_vendas.drop_duplicates(subset= ["ID_Pedido", "ID_Produto"], inplace=True)
 dup_removed = before - len(df_vendas)
 
 
+#Corrigir chaves invalidas
+
+
+mask_prod = df_vendas["ID_Produto"].isin(df_produto["ID_Produto"])
+mask_cli = df_vendas["ID_Cliente"].isin(df_cliente["ID_Cliente"])
+mask_canal = df_vendas["ID_Canal"].isin(df_canal["ID_Canal"])
+df_vendas = df_vendas[mask_prod & mask_cli & mask_canal]
+
+
+
+
+
+
 
 
 
