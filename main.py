@@ -21,3 +21,4 @@ def strip_strings(df: pd.DataFrame) -> pd.DataFrame:
 
 def auto_widths(writer, df: pd.DataFrame, sheet_name: str, minw=10, maxw=35):
     """Ajusta largura das colunas no Excel"""
+    ws = writer.sheets[sheet_name]
